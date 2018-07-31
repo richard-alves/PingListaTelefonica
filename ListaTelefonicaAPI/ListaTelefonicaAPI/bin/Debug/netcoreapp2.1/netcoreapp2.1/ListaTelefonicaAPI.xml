@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ListaTelefonicaAPI</name>
+    </assembly>
+    <members>
+        <member name="T:ListaTelefonicaAPI.Controllers.ContatosController">
+            <summary>
+            Controlador de contatos
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.#ctor(ListaTelefonicaAPI.Repository.IContatoRepository)">
+            <summary>
+            Inicializa uma nova instância da classe <see cref="T:ListaTelefonicaAPI.Controllers.ContatosController"/>
+            </summary>
+            <param name="contatoRepository">Repository para trabalhar com o gerenciamento dos contatos</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.GetContatosAsync(System.String)">
+            <summary>
+            Obtendo contatos
+            </summary>
+            <param name="filtro">Filtro por nome. Ex.: "nome ilike %tes%" </param>
+            <returns>Lista de contatos</returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.GetById(System.Int32)">
+            <summary>
+            Obtém contato por código
+            </summary>
+            <param name="id">Código do contato</param>
+            <returns>Instância de <see cref="T:ListaTelefonicaAPI.Models.Contato"/> do código informado</returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.Create(ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            Adicionando um novo contato
+            </summary>
+            <param name="item">Contato a ser adicionado</param>
+            <returns>Rota GetContato</returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.Update(System.Int32,ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            Atualizando um contato existente
+            </summary>
+            <param name="id">Código do contato a ser atualizado</param>
+            <param name="item">Contato, se existir</param>
+            <returns>NoContentResult (OK)</returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.ContatosController.Delete(System.Int32)">
+            <summary>
+            Deleta um contato
+            </summary>
+            <param name="id">Código do contato a ser removido</param>
+            <returns>NoContentResult (OK)</returns>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Controllers.LoginController">
+            <summary>
+            Classe para gerenciamento de logins
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.LoginController.#ctor(Microsoft.AspNetCore.Identity.UserManager{ListaTelefonicaAPI.Models.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{ListaTelefonicaAPI.Models.ApplicationUser},ListaTelefonicaAPI.Services.IEmailSender,Microsoft.Extensions.Logging.ILogger{ListaTelefonicaAPI.Controllers.LoginController})">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.Controllers.LoginController"/>
+            </summary>
+            <param name="userManager">Classe de usuário</param>
+            <param name="signInManager">gerenciamento de login</param>
+            <param name="emailSender">Para esquecimento de senha (não implementado)</param>
+            <param name="logger">Logs</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.LoginController.Post(ListaTelefonicaAPI.Models.Autenticacao.User,Microsoft.AspNetCore.Identity.UserManager{ListaTelefonicaAPI.Models.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{ListaTelefonicaAPI.Models.ApplicationUser},ListaTelefonicaAPI.SigningConfigurations,ListaTelefonicaAPI.Models.Autenticacao.TokenConfigurations)">
+            <summary>
+            Efetuando o login
+            </summary>
+            <param name="usuario">Usuário logando</param>
+            <param name="userManager">Gerenciamento de usuário</param>
+            <param name="signInManager">Gerenciamento de login</param>
+            <param name="signingConfigurations">Configurações de login</param>
+            <param name="tokenConfigurations">Configurações de Token</param>
+            <returns>Formato json com sucesso ou falha</returns>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Data.IdentityInitializer">
+            <summary>
+            Classe para inicializar tabelas e informação de identidade
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Data.IdentityInitializer.#ctor(ListaTelefonicaAPI.Data.ListaTelefonicaContext,Microsoft.AspNetCore.Identity.UserManager{ListaTelefonicaAPI.Models.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole})">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.Data.IdentityInitializer"/>
+            </summary>
+            <param name="context">DbContext</param>
+            <param name="userManager">Gerenciamento de usuário</param>
+            <param name="roleManager">Gerenciamento de acessos</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Data.IdentityInitializer.Initialize">
+            <summary>
+            Inicializando
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Data.IdentityInitializer.CreateUser(ListaTelefonicaAPI.Models.ApplicationUser,System.String,System.String)">
+            <summary>
+            Cria um usuário
+            </summary>
+            <param name="user">Nome de usuário</param>
+            <param name="password">Senha</param>
+            <param name="initialRole">Role</param>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Data.ListaTelefonicaContext">
+            <summary>
+            DBContext
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Data.ListaTelefonicaContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ListaTelefonicaAPI.Data.ListaTelefonicaContext})">
+            <summary>
+            Inicializa uma nova instância de DbContext <see cref="T:ListaTelefonicaAPI.Data.ListaTelefonicaContext"/>
+            </summary>
+            <param name="options">opções</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Data.ListaTelefonicaContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Permite sobrescrever/complementar comportamento padrão
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Data.ListaTelefonicaContext.Contatos">
+            <summary>
+            DbSet de contatos
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Models.ApplicationUser">
+            <summary>
+            Classe para controle de identificação do usuário
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Models.Autenticacao.Roles">
+            <summary>
+            Classe com todas as roles
+            </summary>
+        </member>
+        <member name="F:ListaTelefonicaAPI.Models.Autenticacao.Roles.DEFAULT_ROLE">
+            <summary>
+            Role padrão
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Models.Autenticacao.TokenConfigurations">
+            <summary>
+            Configurações de token
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.TokenConfigurations.Audience">
+            <summary />
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.TokenConfigurations.Issuer">
+            <summary />
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.TokenConfigurations.Seconds">
+            <summary />
+        </member>
+        <member name="T:ListaTelefonicaAPI.Models.Autenticacao.User">
+            <summary>
+            Informações do usuário ao logar
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.User.UserID">
+            <summary>
+            Nome de usuário
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.User.Password">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Autenticacao.User.RememberMe">
+            <summary>
+            Manter logado?
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Models.Contato">
+            <summary>
+            Classe com informações dos contatos
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Codigo">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Telefone">
+            <summary>
+            Telefone Principal
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Celular">
+            <summary>
+            Celular
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Email">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Models.Contato.Nascimento">
+            <summary>
+            Data de nascimento
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Program">
+            <summary>
+            Onde tudo começa
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Program.Main(System.String[])">
+            <summary>
+            Classe primeira
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Program.BuildWebHost(System.String[])">
+            <summary>
+            Construindo o WebHost
+            </summary>
+            <param name="args">parâmetros de inicialização</param>
+            <returns>IWebHost</returns>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Repository.ContatoRepository">
+            <summary>
+            Repositório de Contatos
+            </summary>
+        </member>
+        <member name="F:ListaTelefonicaAPI.Repository.ContatoRepository._context">
+            <summary>
+            DbContexts
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.#ctor(ListaTelefonicaAPI.Data.ListaTelefonicaContext)">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.Repository.ContatoRepository"/>
+            </summary>
+            <param name="context">DbContext</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.Add(ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            Inserindo novo contato
+            </summary>
+            <param name="contato">Contato a ser inserido</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.Delete(System.Int32)">
+            <summary>
+            Deletando contato existente
+            </summary>
+            <param name="id">Código do contato</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.Find(System.Int32)">
+            <summary>
+            Encontrando contatos
+            </summary>
+            <param name="id">Código do contato</param>
+            <returns>Contato<see cref="T:ListaTelefonicaAPI.Models.Contato"/></returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.GetContatosAsync(System.String)">
+            <summary>
+            Obtém vários contatos
+            </summary>
+            <param name="filtro">Filtro a ser aplicado no campo nome</param>
+            <returns>Lista de contatos</returns>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.ContatoRepository.Update(ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            Atualizando um contato existente
+            </summary>
+            <param name="contato">Contato a ser atualizado</param>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Repository.IContatoRepository">
+            <summary>
+            Interface para repositório de contato
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.Add(ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.Add(ListaTelefonicaAPI.Models.Contato)"/>
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.GetContatosAsync(System.String)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.GetContatosAsync(System.String)"/>
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.Find(System.Int32)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.Find(System.Int32)"/>
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.Delete(System.Int32)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.Delete(System.Int32)"/>
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.Update(ListaTelefonicaAPI.Models.Contato)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.Update(ListaTelefonicaAPI.Models.Contato)"/>
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.SigningConfigurations">
+            <summary>
+            Configurações de login
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.SigningConfigurations.#ctor">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.SigningConfigurations"/>
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.SigningConfigurations.Key">
+            <summary>
+            Chave
+            </summary>
+        </member>
+        <member name="P:ListaTelefonicaAPI.SigningConfigurations.SigningCredentials">
+            <summary>
+            Credenciais
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Startup">
+            <summary>
+            Configurando serviços
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.Startup"/>
+            </summary>
+            <param name="configuration">Parâmetros de configuração</param>
+        </member>
+        <member name="P:ListaTelefonicaAPI.Startup.Configuration">
+            <summary>
+            Instância de configuração recebida 
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método para adicionar serviços
+            </summary>
+            <param name="services">Coleção de serviços</param>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,ListaTelefonicaAPI.Data.ListaTelefonicaContext,Microsoft.AspNetCore.Identity.UserManager{ListaTelefonicaAPI.Models.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole})">
+            <summary>
+            Configurando o pipeline
+            </summary>
+            <param name="app">Applicação</param>
+            <param name="env">Ambiente</param>
+            <param name="context">Contexto</param>
+            <param name="userManager">Gerenciamento de contas de usuário</param>
+            <param name="roleManager">gerenciamento de acessos</param>
+        </member>
+    </members>
+</doc>

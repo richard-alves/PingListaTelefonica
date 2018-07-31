@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ListaTelefonicaClient.Models.Contato>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Criar Contato</a>
+</p>
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Procurar por Nome:
+            <input type="text" name="Filtro" value="@ViewData["filtro"]" />
+            <input type="submit" value="Procurar" class="btn btn-default" /> |
+            <a asp-action="Index">Limpar Filtro</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordemNome"]" asp-route-currentFilter="@ViewData["filtro"]">@Html.DisplayNameFor(model => model.Nome)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordemEmail"]" asp-route-currentFilter="@ViewData["filtro"]">@Html.DisplayNameFor(model => model.Email)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordemNasc"]" asp-route-currentFilter="@ViewData["filtro"]">@Html.DisplayNameFor(model => model.Nascimento)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Celular)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nascimento)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-currentFilter="@ViewData["filtro"]">
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-currentFilter="@ViewData["filtro"]">
+</a>
