@@ -76,7 +76,7 @@ namespace ListaTelefonicaAPI.Controllers
                     .FindByNameAsync(usuario.UserID).Result;
 
                 var result = _signInManager.PasswordSignInAsync(usuario.UserID, usuario.Password, usuario.RememberMe, lockoutOnFailure: false);
-
+                
                 if (userIdentity != null)
                 {
                     // Efetua o login com base no Id do usuário e sua senha
@@ -91,7 +91,7 @@ namespace ListaTelefonicaAPI.Controllers
                     }
                 }
             }
-            
+
             if (credenciaisValidas)
             {
                 ClaimsIdentity identity = new ClaimsIdentity(

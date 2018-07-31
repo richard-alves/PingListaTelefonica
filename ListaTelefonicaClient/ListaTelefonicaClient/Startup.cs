@@ -46,17 +46,6 @@ namespace ListaTelefonicaClient
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            // Cliando httpClient para controle de autenticação
-            var client = new HttpClient { BaseAddress = new Uri("http://localhost:59185/") };
-
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            services.AddSingleton(_token);
-            services.AddSingleton(client);
-
-            services.AddTransient<IContatosRepository>(opt => new ContatosRepository(client));
-            services.AddTransient<IAccountRepository>(opt => new AccountRepository(client));
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthentication(authOptions =>
@@ -83,6 +72,18 @@ namespace ListaTelefonicaClient
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>();
+
+            // Cliando httpClient para controle de autenticação
+            var client = new HttpClient { BaseAddress = new Uri("http://localhost:59185/") };
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            services.AddSingleton(_token);
+            services.AddSingleton(client);
+
+            services.AddTransient<IContatosRepository>(opt => new ContatosRepository(client));
+            services.AddTransient<IAccountRepository>(opt => new AccountRepository(client));
         }
 
         /// <summary>

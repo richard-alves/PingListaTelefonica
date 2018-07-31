@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
+using ListaTelefonicaClient.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace ListaTelefonicaClient
 {
@@ -22,9 +28,9 @@ namespace ListaTelefonicaClient
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args)
-                .UseKestrel()
-                .Build()
-                .Run();
+                    .UseKestrel()
+                    .Build()
+                    .Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
