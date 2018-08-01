@@ -45,6 +45,18 @@ namespace ListaTelefonicaClient.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            var res = await _rep.Logout();
+
+            if (res.IsSuccessStatusCode)
+            {
+                Startup.Autenticado = false;
+                return RedirectToAction("Login");
+            }
+            else return BadRequest(res.Content);
+        }
         
         /// <summary>
         /// Efetuando login
@@ -57,6 +69,8 @@ namespace ListaTelefonicaClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             // Retorno do login
             var response = await _rep.Login(model.Email, model.Password, model.RememberMe);
             
@@ -64,7 +78,11 @@ namespace ListaTelefonicaClient.Controllers
             if (!response.httpResponse.IsSuccessStatusCode) return BadRequest(response.httpResponse);
 
             // Se foi autenticado retorna página anterior
-            if (response.token.Authenticated) return RedirectToLocal(returnUrl);
+            if (response.token.Authenticated)
+            {
+                Startup.Autenticado = true;
+                return RedirectToLocal(returnUrl);
+            }
 
             // Qualquer coisa ficamos na tela de login
             return View(model);

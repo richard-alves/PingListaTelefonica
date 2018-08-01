@@ -26,7 +26,9 @@ namespace ListaTelefonicaClient.Repository
         /// <summary>
         /// Uri correspondente à página de login
         /// </summary>
-        const string _URI = "api/Login/";
+        const string _URI_LOGIN = "api/Login/";
+
+        const string _URI_LOGOUT = "api/Logout/";
 
         /// <summary>
         /// Inicializa uma nova instância de <see cref="AccountRepository"/>
@@ -49,7 +51,7 @@ namespace ListaTelefonicaClient.Repository
 
             // Envio da requisição a fim de autenticar e obter o token de acesso
             HttpResponseMessage respToken = this._client.PostAsync(
-                _URI, new StringContent(
+                _URI_LOGIN, new StringContent(
                     JsonConvert.SerializeObject(new
                     {
                         UserID = userName,
@@ -68,15 +70,6 @@ namespace ListaTelefonicaClient.Repository
                     // Associar o token aos headers do objeto do tipo HttpClient
                     this._client.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.AccessToken);
-
-                    List<Contato> contatos = new List<Contato>();
-                    HttpResponseMessage res = _client.GetAsync("api/Contatos/").Result;
-
-                    if (res.IsSuccessStatusCode)
-                    {
-                        var result = await res.Content.ReadAsStringAsync();
-                        contatos = JsonConvert.DeserializeObject<List<Contato>>(result);
-                    }
                     
                     return (httpResponse: respToken, token: token);
                 }
@@ -84,5 +77,19 @@ namespace ListaTelefonicaClient.Repository
 
             return (httpResponse: respToken, token: token);
         }
+
+        public async Task<HttpResponseMessage> Logout()
+        {
+            var res = await _client.GetAsync(_URI_LOGOUT);
+            if (res.IsSuccessStatusCode) _client.DefaultRequestHeaders.Remove("Authorization");
+
+            return res;
+        }
+
+        public bool Autenticado()
+        {
+            return string.IsNullOrWhiteSpace(_client.DefaultRequestHeaders.Authorization.Parameter);
+        }
+
     }
 }

@@ -12,11 +12,11 @@ namespace ListaTelefonicaClient.Repository
     /// </summary>
     public interface IContatosRepository
     {
-        Task<IEnumerable<Contato>> GetContatosAsync();
-        Task<List<Contato>> GetContatosAsync(string filtro);
-        Task<Contato> GetContatoAsync(int id);
-        Task<HttpResponseMessage> Create(Contato contato);
-        Task<HttpResponseMessage> Update(Contato contato);
+        Task<IEnumerable<ContatoViewModel>> GetContatosAsync();
+        Task<List<ContatoViewModel>> GetContatosAsync(string filtro);
+        Task<ContatoViewModel> GetContatoAsync(int id);
+        Task<HttpResponseMessage> Create(ContatoViewModel contato);
+        Task<HttpResponseMessage> Update(ContatoViewModel contato);
         Task<HttpResponseMessage> Delete(int id);
     }
 }

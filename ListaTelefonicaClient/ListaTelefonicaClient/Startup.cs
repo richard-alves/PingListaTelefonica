@@ -26,10 +26,7 @@ namespace ListaTelefonicaClient
     /// </summary>
     public class Startup
     {
-        /// <summary>
-        /// Token de acesso (Plano B para a questão de autenticação do lado do cliente
-        /// </summary>
-        public static Token _token = new Token();
+        public static bool Autenticado { get; set; } = false;
 
         /// <summary>
         /// Cria uma nova instância de <see cref="Startup"/>
@@ -78,12 +75,14 @@ namespace ListaTelefonicaClient
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            services.AddSingleton(_token);
+            
+            services.AddSingleton(new Token());
             services.AddSingleton(client);
 
             services.AddTransient<IContatosRepository>(opt => new ContatosRepository(client));
             services.AddTransient<IAccountRepository>(opt => new AccountRepository(client));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         /// <summary>
@@ -105,6 +104,9 @@ namespace ListaTelefonicaClient
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            //IHttpContextAccessor httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            //Extensions.Context.Configure(httpContextAccessor);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -116,6 +118,7 @@ namespace ListaTelefonicaClient
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

@@ -76,6 +76,16 @@
             <param name="tokenConfigurations">Configurações de Token</param>
             <returns>Formato json com sucesso ou falha</returns>
         </member>
+        <member name="T:ListaTelefonicaAPI.Controllers.LogoutController">
+            <summary>
+            Responsável pelo logout
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.LogoutController.Get">
+            <summary>
+            Fazendo o logout
+            </summary>
+        </member>
         <member name="T:ListaTelefonicaAPI.Data.IdentityInitializer">
             <summary>
             Classe para inicializar tabelas e informação de identidade
@@ -302,6 +312,29 @@
         <member name="M:ListaTelefonicaAPI.Repository.IContatoRepository.Update(ListaTelefonicaAPI.Models.Contato)">
             <summary>
             <see cref="M:ListaTelefonicaAPI.Repository.ContatoRepository.Update(ListaTelefonicaAPI.Models.Contato)"/>
+            </summary>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Services.EmailSender">
+            <summary>
+            Classe para envio de e-mail para esquecimento de senha
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Services.EmailSender.SendEmailAsync(System.String,System.String,System.String)">
+            <summary>
+            Enviando o e-mail
+            </summary>
+            <param name="email">Endereço de e-mail</param>
+            <param name="subject">Assunto</param>
+            <param name="message">Corpo do e-mail</param>
+        </member>
+        <member name="T:ListaTelefonicaAPI.Services.IEmailSender">
+            <summary>
+            <see cref="T:ListaTelefonicaAPI.Services.EmailSender"/>
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Services.IEmailSender.SendEmailAsync(System.String,System.String,System.String)">
+            <summary>
+            <see cref="M:ListaTelefonicaAPI.Services.EmailSender.SendEmailAsync(System.String,System.String,System.String)"/>
             </summary>
         </member>
         <member name="T:ListaTelefonicaAPI.SigningConfigurations">

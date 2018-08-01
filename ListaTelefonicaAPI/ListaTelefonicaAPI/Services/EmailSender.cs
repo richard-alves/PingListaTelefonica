@@ -5,10 +5,17 @@ using System.Threading.Tasks;
 
 namespace ListaTelefonicaAPI.Services
 {
-    // This class is used by the application to send email for account confirmation and password reset.
-    // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
+    /// <summary>
+    /// Classe para envio de e-mail para esquecimento de senha
+    /// </summary>
     public class EmailSender : IEmailSender
     {
+        /// <summary>
+        /// Enviando o e-mail
+        /// </summary>
+        /// <param name="email">Endereço de e-mail</param>
+        /// <param name="subject">Assunto</param>
+        /// <param name="message">Corpo do e-mail</param>
         public Task SendEmailAsync(string email, string subject, string message)
         {
             return Task.CompletedTask;

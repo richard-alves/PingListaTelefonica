@@ -16,5 +16,6 @@ namespace ListaTelefonicaClient.Repository
         /// <see cref="AccountRepository.Login(string, string, bool)"/>
         /// </summary>
         Task<(HttpResponseMessage httpResponse, Token token)> Login(string userName, string pass, bool rememberMe);
+        Task<HttpResponseMessage> Logout();
     }
 }

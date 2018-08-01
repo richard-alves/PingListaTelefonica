@@ -10,7 +10,7 @@ namespace ListaTelefonicaClient.Models
     /// <summary>
     /// Informações do contato
     /// </summary>
-    public class Contato
+    public class ContatoViewModel
     {
         [Key]
         [Required]
@@ -23,7 +23,9 @@ namespace ListaTelefonicaClient.Models
 
         [Required]
         [Phone]
-        [DisplayFormat(ApplyFormatInEditMode =true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:(351) ### ### ###}")]
+        [RegularExpression("#########")]
+        [DataType(DataType.PhoneNumber)]
         public string Telefone { get; set; }
 
         [Phone]
@@ -35,6 +37,7 @@ namespace ListaTelefonicaClient.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Nascimento { get; set; }
     }
 }

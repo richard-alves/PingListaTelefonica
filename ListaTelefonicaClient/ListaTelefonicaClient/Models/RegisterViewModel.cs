@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListaTelefonicaClient.Models
 {
-    /// <summary>
-    /// Model utilizado no login
-    /// </summary>
-    public class LoginViewModel
+    public class RegisterViewModel
     {
         [Required]
         [Display(Name = "Usuário")]
@@ -20,9 +17,10 @@ namespace ListaTelefonicaClient.Models
         [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name = "Manter conectado")]
-        public bool RememberMe { get; set; }
-        
-        public Token token { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Senha")]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
     }
 }

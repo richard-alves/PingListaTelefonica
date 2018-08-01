@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace ListaTelefonicaClient.Controllers
 {
@@ -37,7 +38,7 @@ namespace ListaTelefonicaClient.Controllers
         // GET: ContatoViewModels/Create
         public IActionResult Create()
         {
-
+            if (!Startup.Autenticado) return RedirectToLogin();
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace ListaTelefonicaClient.Controllers
         // POST: ContatoViewModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] Contato contato)
+        public async Task<IActionResult> Create([Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] ContatoViewModel contato)
         {
 
             if (ModelState.IsValid)
@@ -59,13 +60,14 @@ namespace ListaTelefonicaClient.Controllers
                 }
                 catch (NotAuthorizedException)
                 {
-                    return RedirectToRoute("Login");
+                    return RedirectToLogin();
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(ex.Message);
                 }
             }
+            else return BadRequest(ModelState);
 
             return RedirectToAction(nameof(Index));
         }
@@ -77,6 +79,8 @@ namespace ListaTelefonicaClient.Controllers
         // GET: Contatos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!Startup.Autenticado) return RedirectToLogin();
+
             if (id == null || id < 0) return NotFound();
 
             var contato = await _rep.GetContatoAsync(id.GetValueOrDefault());
@@ -171,7 +175,7 @@ namespace ListaTelefonicaClient.Controllers
         // POST: Contatos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] Contato contato)
+        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] ContatoViewModel contato)
         {
             if (id != contato.Codigo) return NotFound();
 
@@ -221,7 +225,6 @@ namespace ListaTelefonicaClient.Controllers
         /// <returns>Página</returns>
         public async Task<IActionResult> Index(int id, string filtro, string sortOrder, string currentFilter)
         {
-
             try
             {
                 ViewData["CurrentSort"] = sortOrder;
@@ -229,7 +232,7 @@ namespace ListaTelefonicaClient.Controllers
                 ViewData["ordemEmail"] = sortOrder == "email" ? "email_desc" : "email";
                 ViewData["ordemNasc"] = sortOrder == "nasc" ? "nasc_desc" : "nasc";
 
-                List<Contato> contatos = new List<Contato>();
+                List<ContatoViewModel> contatos = new List<ContatoViewModel>();
 
                 if (filtro == null)
                     filtro = currentFilter;
@@ -258,12 +261,21 @@ namespace ListaTelefonicaClient.Controllers
             }
             catch (NotAuthorizedException)
             {
-                return RedirectToRoute("Login");
+                return RedirectToLogin();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        
+        /// <summary>
+        /// Redirecionando para a tela de login, com a url de retorno
+        /// </summary>
+        /// <returns>Abre a tela de login</returns>
+        private IActionResult RedirectToLogin()
+            {
+            return RedirectToRoute("Login", new { returnUrl = ControllerContext.HttpContext.Request.GetEncodedPathAndQuery() });
         }
 
         /// <summary />
@@ -287,7 +299,7 @@ namespace ListaTelefonicaClient.Controllers
         /// <param name="contatos">Lista de contatos</param>
         /// <param name="ordem">campo a ser ordernado</param>
         /// <returns>Lista de contatos ordenada</returns>
-        private IEnumerable<Contato> Ordernar(IEnumerable<Contato> contatos, string ordem)
+        private IEnumerable<ContatoViewModel> Ordernar(IEnumerable<ContatoViewModel> contatos, string ordem)
         {
             // O padrão é ordernar pr nome
             if (ordem == null) ordem = "nome";

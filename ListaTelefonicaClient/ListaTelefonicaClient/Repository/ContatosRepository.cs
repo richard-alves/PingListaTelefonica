@@ -36,7 +36,7 @@ namespace ListaTelefonicaClient.Repository
         /// Criando novo contato
         /// </summary>
         /// <param name="contato">Contato a ser criado</param>
-        public async Task<HttpResponseMessage> Create(Contato contato)
+        public async Task<HttpResponseMessage> Create(ContatoViewModel contato)
         {
             try
             {
@@ -67,16 +67,16 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         /// <param name="id">Código do contato</param>
         /// <returns>Contato</returns>
-        public async Task<Contato> GetContatoAsync(int id)
+        public async Task<ContatoViewModel> GetContatoAsync(int id)
         {
-            var contato = new Contato();
+            var contato = new ContatoViewModel();
 
             HttpResponseMessage res = await GetAsync(_URI + id);
 
             if (res.IsSuccessStatusCode)
             {
                 var result = await res.Content.ReadAsStringAsync();
-                contato = JsonConvert.DeserializeObject<Contato>(result);
+                contato = JsonConvert.DeserializeObject<ContatoViewModel>(result);
             }
 
             return contato;
@@ -86,16 +86,16 @@ namespace ListaTelefonicaClient.Repository
         /// Obtendo todos os contatos
         /// </summary>
         /// <returns>Lista de contatos</returns>
-        public async Task<IEnumerable<Contato>> GetContatosAsync()
+        public async Task<IEnumerable<ContatoViewModel>> GetContatosAsync()
         {
-            List<Contato> contatos = new List<Contato>();
+            List<ContatoViewModel> contatos = new List<ContatoViewModel>();
 
             HttpResponseMessage res = await GetAsync(_URI);
 
             if (res.IsSuccessStatusCode)
             {
                 var result = await res.Content.ReadAsStringAsync();
-                contatos = JsonConvert.DeserializeObject<List<Contato>>(result);
+                contatos = JsonConvert.DeserializeObject<List<ContatoViewModel>>(result);
             }
 
             return contatos;
@@ -106,16 +106,16 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         /// <param name="filtro">Filtro a ser aplicado no campo nome</param>
         /// <returns>Lista de contatos</returns>
-        public async Task<List<Contato>> GetContatosAsync(string filtro)
+        public async Task<List<ContatoViewModel>> GetContatosAsync(string filtro)
         {
-            List<Contato> contatos = new List<Contato>();
+            List<ContatoViewModel> contatos = new List<ContatoViewModel>();
 
             HttpResponseMessage res = await GetAsync(_URI + "?filtro=" + filtro);
 
             if (res.IsSuccessStatusCode)
             {
                 var result = await res.Content.ReadAsStringAsync();
-                contatos = JsonConvert.DeserializeObject<List<Contato>>(result);
+                contatos = JsonConvert.DeserializeObject<List<ContatoViewModel>>(result);
             }
 
             return contatos;
@@ -125,7 +125,7 @@ namespace ListaTelefonicaClient.Repository
         /// Atualizando o contato
         /// </summary>
         /// <param name="contato">Contato a ser atualizado</param>
-        public async Task<HttpResponseMessage> Update(Contato contato)
+        public async Task<HttpResponseMessage> Update(ContatoViewModel contato)
         {
             return CheckAuth(await PutAsJsonAsync(_URI + contato.Codigo, contato));
         }
@@ -165,7 +165,7 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         /// <param name="uri">URL de acesso</param>
         /// <param name="contato">Contato sendo atualizado</param>
-        private async Task<HttpResponseMessage> PutAsJsonAsync(string uri, Contato contato)
+        private async Task<HttpResponseMessage> PutAsJsonAsync(string uri, ContatoViewModel contato)
         {
             return CheckAuth(await _client.PutAsJsonAsync(uri, contato));
         }

@@ -2,6 +2,9 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "jQuery.InputMask/4.0.0": {
+        "type": "package"
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4399,6 +4402,58 @@
     }
   },
   "libraries": {
+    "jQuery.InputMask/4.0.0": {
+      "sha512": "nOZbZmIBE4UfuU2KUbFniitweCornazO1FU/09688anJYawcfgJAXqJdN7e/jV/XsFX7r0A79aLAVISX4RCCwA==",
+      "type": "package",
+      "path": "jquery.inputmask/4.0.0",
+      "files": [
+        "Readme.txt",
+        "content/Scripts/inputmask/bindings/inputmask.binding.js",
+        "content/Scripts/inputmask/bindings/inputmask.binding.min.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.jqlite.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.jqlite.min.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.jquery.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.jquery.min.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.js",
+        "content/Scripts/inputmask/dependencyLibs/inputmask.dependencyLib.min.js",
+        "content/Scripts/inputmask/global/document.js",
+        "content/Scripts/inputmask/global/document.min.js",
+        "content/Scripts/inputmask/global/window.js",
+        "content/Scripts/inputmask/global/window.min.js",
+        "content/Scripts/inputmask/inputmask.date.extensions.js",
+        "content/Scripts/inputmask/inputmask.date.extensions.min.js",
+        "content/Scripts/inputmask/inputmask.extensions.js",
+        "content/Scripts/inputmask/inputmask.extensions.min.js",
+        "content/Scripts/inputmask/inputmask.js",
+        "content/Scripts/inputmask/inputmask.min.js",
+        "content/Scripts/inputmask/inputmask.numeric.extensions.js",
+        "content/Scripts/inputmask/inputmask.numeric.extensions.min.js",
+        "content/Scripts/inputmask/inputmask.phone.extensions.js",
+        "content/Scripts/inputmask/inputmask.phone.extensions.min.js",
+        "content/Scripts/inputmask/jquery.inputmask.js",
+        "content/Scripts/inputmask/jquery.inputmask.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-be.js",
+        "content/Scripts/inputmask/phone-codes/phone-be.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-ca.js",
+        "content/Scripts/inputmask/phone-codes/phone-ca.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-hu.js",
+        "content/Scripts/inputmask/phone-codes/phone-hu.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-it.js",
+        "content/Scripts/inputmask/phone-codes/phone-it.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-mx.js",
+        "content/Scripts/inputmask/phone-codes/phone-mx.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-nl.js",
+        "content/Scripts/inputmask/phone-codes/phone-nl.min.js",
+        "content/Scripts/inputmask/phone-codes/phone-ru.js",
+        "content/Scripts/inputmask/phone-codes/phone-ru.min.js",
+        "content/Scripts/inputmask/phone-codes/phone.js",
+        "content/Scripts/inputmask/phone-codes/phone.min.js",
+        "content/Scripts/jquery.inputmask.bundle.js",
+        "content/Scripts/jquery.inputmask.bundle.min.js",
+        "jquery.inputmask.4.0.0.nupkg.sha512",
+        "jquery.inputmask.nuspec"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
       "type": "package",
@@ -11609,7 +11664,8 @@
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Swashbuckle.AspNetCore >= 3.0.0"
+      "Swashbuckle.AspNetCore >= 3.0.0",
+      "jquery.inputmask >= 4.0.0"
     ]
   },
   "packageFolders": {
@@ -11667,6 +11723,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[3.0.0, )"
+          },
+          "jquery.inputmask": {
+            "target": "Package",
+            "version": "[4.0.0, )"
           }
         },
         "imports": [

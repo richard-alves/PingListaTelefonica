@@ -1,12 +1,12 @@
-﻿@model ListaTelefonicaClient.Models.Contato
+﻿@model ListaTelefonicaClient.Models.ContatoViewModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Remover Contato</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja remover esse contato?</h3>
 <div>
     <h4>ContatoViewModel</h4>
     <hr />
@@ -46,6 +46,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Codigo" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Voltar para lista de contatos</a>
     </form>
 </div>
