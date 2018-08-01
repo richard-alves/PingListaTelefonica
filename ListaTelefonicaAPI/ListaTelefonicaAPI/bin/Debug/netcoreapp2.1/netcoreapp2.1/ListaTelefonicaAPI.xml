@@ -86,6 +86,15 @@
             Fazendo o logout
             </summary>
         </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.RegisterController.Post(ListaTelefonicaAPI.Models.Autenticacao.User)">
+            <summary>
+            Registrando novo usuário
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <param name="confirmPassword"></param>
+            <returns></returns>
+        </member>
         <member name="T:ListaTelefonicaAPI.Data.IdentityInitializer">
             <summary>
             Classe para inicializar tabelas e informação de identidade

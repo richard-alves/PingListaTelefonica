@@ -13,6 +13,7 @@ namespace ListaTelefonicaClient.Models
     {
         [Required]
         [Display(Name = "Usuário")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

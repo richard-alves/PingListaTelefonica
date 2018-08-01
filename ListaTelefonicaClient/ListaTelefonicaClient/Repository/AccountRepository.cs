@@ -27,8 +27,8 @@ namespace ListaTelefonicaClient.Repository
         /// Uri correspondente à página de login
         /// </summary>
         const string _URI_LOGIN = "api/Login/";
-
         const string _URI_LOGOUT = "api/Logout/";
+        const string _URI_REGISTER = "api/Register/";
 
         /// <summary>
         /// Inicializa uma nova instância de <see cref="AccountRepository"/>
@@ -50,14 +50,14 @@ namespace ListaTelefonicaClient.Repository
             Token token = new Token();
 
             // Envio da requisição a fim de autenticar e obter o token de acesso
-            HttpResponseMessage respToken = this._client.PostAsync(
+            HttpResponseMessage respToken = await this._client.PostAsync(
                 _URI_LOGIN, new StringContent(
                     JsonConvert.SerializeObject(new
                     {
                         UserID = userName,
                         Password = pass,
                         RememberMe = rememberMe
-                    }), Encoding.UTF8, "application/json")).Result;
+                    }), Encoding.UTF8, "application/json"));
 
             string conteudo =
                 respToken.Content.ReadAsStringAsync().Result;
@@ -82,6 +82,18 @@ namespace ListaTelefonicaClient.Repository
         {
             var res = await _client.GetAsync(_URI_LOGOUT);
             if (res.IsSuccessStatusCode) _client.DefaultRequestHeaders.Remove("Authorization");
+
+            return res;
+        }
+
+        public async Task<HttpResponseMessage> Register(RegisterViewModel model)
+        {
+            var res = await _client.PostAsync(_URI_REGISTER, new StringContent(
+                     JsonConvert.SerializeObject(new
+                     {
+                         UserID = model.Email,
+                         Password = model.Password
+                     }), Encoding.UTF8, "application/json"));
 
             return res;
         }

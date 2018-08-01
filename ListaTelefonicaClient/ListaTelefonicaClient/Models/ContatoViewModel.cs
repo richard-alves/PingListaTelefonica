@@ -29,6 +29,8 @@ namespace ListaTelefonicaClient.Models
         public string Telefone { get; set; }
 
         [Phone]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:(351) ### ### ###}")]
+        [RegularExpression("#########")]
         public string Celular { get; set; }
 
         [EmailAddress]

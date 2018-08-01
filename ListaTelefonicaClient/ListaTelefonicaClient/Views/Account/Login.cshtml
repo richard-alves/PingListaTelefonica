@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <section>
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Informe seu usuário e senha para logar.</h4>
+                <h4>Informe seu usuário e senha para ter acesso a lista telefônica</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-action="ForgotPassword">Esqueci minha senha.</a>
+                        <a asp-action="ForgotPassword">Esqueci minha senha</a>
                     </p>
                     <p>
                         <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Registrar-se</a>

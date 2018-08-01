@@ -17,5 +17,6 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         Task<(HttpResponseMessage httpResponse, Token token)> Login(string userName, string pass, bool rememberMe);
         Task<HttpResponseMessage> Logout();
+        Task<HttpResponseMessage> Register(RegisterViewModel model);
     }
 }

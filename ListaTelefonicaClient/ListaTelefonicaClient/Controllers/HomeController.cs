@@ -268,14 +268,17 @@ namespace ListaTelefonicaClient.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         /// <summary>
         /// Redirecionando para a tela de login, com a url de retorno
         /// </summary>
         /// <returns>Abre a tela de login</returns>
         private IActionResult RedirectToLogin()
-            {
-            return RedirectToRoute("Login", new { returnUrl = ControllerContext.HttpContext.Request.GetEncodedPathAndQuery() });
+        {
+            string url = ControllerContext.HttpContext.Request.GetEncodedPathAndQuery();
+            url = url.Equals("/") ? ControllerContext.HttpContext.Request.GetEncodedUrl() : url;
+
+            return RedirectToRoute("Login", new { returnUrl = url });
         }
 
         /// <summary />

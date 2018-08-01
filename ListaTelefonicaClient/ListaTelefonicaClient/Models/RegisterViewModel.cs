@@ -19,7 +19,7 @@ namespace ListaTelefonicaClient.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Senha")]
+        [Display(Name = "Repetir a Senha")]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }

@@ -1,13 +1,7 @@
 ﻿using ListaTelefonicaClient.Models;
 using ListaTelefonicaClient.Repository;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ListaTelefonicaClient.Controllers
@@ -21,7 +15,7 @@ namespace ListaTelefonicaClient.Controllers
         /// Repositório para gerenciamento de login
         /// </summary>
         private readonly IAccountRepository _rep;
-        
+
         /// <summary>
         /// Inicializa uma nova instância de <see cref="AccountController"/>
         /// </summary>
@@ -39,25 +33,13 @@ namespace ListaTelefonicaClient.Controllers
         /// <returns>Página que estava acessando</returns>
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            //await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            await Logout();
 
             ViewData["ReturnUrl"] = returnUrl;
 
             return View();
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            var res = await _rep.Logout();
-
-            if (res.IsSuccessStatusCode)
-            {
-                Startup.Autenticado = false;
-                return RedirectToAction("Login");
-            }
-            else return BadRequest(res.Content);
-        }
-        
         /// <summary>
         /// Efetuando login
         /// </summary>
@@ -73,7 +55,7 @@ namespace ListaTelefonicaClient.Controllers
 
             // Retorno do login
             var response = await _rep.Login(model.Email, model.Password, model.RememberMe);
-            
+
             // Se não deu certo retorna BadRequest
             if (!response.httpResponse.IsSuccessStatusCode) return BadRequest(response.httpResponse);
 
@@ -88,6 +70,43 @@ namespace ListaTelefonicaClient.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            var res = await _rep.Logout();
+
+            if (res.IsSuccessStatusCode)
+            {
+                Startup.Autenticado = false;
+                return RedirectToAction("Login");
+            }
+            else return BadRequest(res.Content);
+        }
+
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            await Logout();
+
+            ViewData["ReturnUrl"] = returnUrl;
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("Email,Password,ConfirmPassword")] RegisterViewModel model, string returnUrl)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            var res = await _rep.Register(model);
+
+            if (res.IsSuccessStatusCode)
+            {
+                await Login(new LoginViewModel { Email = model.Email, Password = model.Password }, returnUrl);
+            }
+
+            return View(model);
+        }
         /// <summary>
         /// Página que estava acessando ou Home
         /// </summary>
