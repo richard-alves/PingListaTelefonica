@@ -57,9 +57,9 @@ namespace ListaTelefonicaClient.Repository
         /// Removendo contato
         /// </summary>
         /// <param name="id">Código do contato</param>
-        public async Task Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
-            await DeleteAsync(_URI + id);
+           return await DeleteAsync(_URI + id);
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace ListaTelefonicaClient.Repository
         /// Atualizando o contato
         /// </summary>
         /// <param name="contato">Contato a ser atualizado</param>
-        public async Task Update(Contato contato)
+        public async Task<HttpResponseMessage> Update(Contato contato)
         {
-            await PutAsJsonAsync(_URI + contato.Codigo, contato);
+            return CheckAuth(await PutAsJsonAsync(_URI + contato.Codigo, contato));
         }
 
         /// <summary>
@@ -135,15 +135,9 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        private async Task DeleteAsync(string uri)
+        private async Task<HttpResponseMessage> DeleteAsync(string uri)
         {
-            var res = await _client.DeleteAsync(uri);
-
-            if (!res.IsSuccessStatusCode)
-                if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    throw new NotAuthorizedException();
-                else
-                    throw new ApplicationException(res.StatusCode.ToString());
+            return CheckAuth(await _client.DeleteAsync(uri));
         }
 
         /// <summary>
@@ -152,14 +146,7 @@ namespace ListaTelefonicaClient.Repository
         /// <param name="uri">URL de acesso</param>
         private async Task<HttpResponseMessage> GetAsync(string uri)
         {
-            var res = await _client.GetAsync(uri);
-
-            if (res.IsSuccessStatusCode)
-                return res;
-            else if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                throw new NotAuthorizedException();
-            else
-                throw new ApplicationException(res.StatusCode.ToString());
+            return CheckAuth(await _client.GetAsync(uri));
         }
 
         /// <summary>
@@ -170,14 +157,7 @@ namespace ListaTelefonicaClient.Repository
         /// <returns></returns>
         private async Task<HttpResponseMessage> PostAsync(string uri, StringContent content)
         {
-            var res = await _client.PostAsync(uri, content);
-
-            if (res.IsSuccessStatusCode)
-                return res;
-            else if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                throw new NotAuthorizedException();
-            else
-                throw new ApplicationException(res.StatusCode.ToString());
+            return CheckAuth(await _client.PostAsync(uri, content));
         }
 
         /// <summary>
@@ -185,15 +165,17 @@ namespace ListaTelefonicaClient.Repository
         /// </summary>
         /// <param name="uri">URL de acesso</param>
         /// <param name="contato">Contato sendo atualizado</param>
-        private async Task PutAsJsonAsync(string uri, Contato contato)
+        private async Task<HttpResponseMessage> PutAsJsonAsync(string uri, Contato contato)
         {
-            var res = await _client.PutAsJsonAsync(uri, contato);
+            return CheckAuth(await _client.PutAsJsonAsync(uri, contato));
+        }
 
-            if (!res.IsSuccessStatusCode)
-                if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    throw new NotAuthorizedException();
-                else
-                    throw new ApplicationException(res.StatusCode.ToString());
+        private HttpResponseMessage CheckAuth(HttpResponseMessage res)
+        {
+            if (!res.IsSuccessStatusCode && res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                throw new NotAuthorizedException();
+
+            return res;
         }
     }
 }

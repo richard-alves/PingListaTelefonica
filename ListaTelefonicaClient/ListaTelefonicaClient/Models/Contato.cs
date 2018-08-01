@@ -23,6 +23,7 @@ namespace ListaTelefonicaClient.Models
 
         [Required]
         [Phone]
+        [DisplayFormat(ApplyFormatInEditMode =true)]
         public string Telefone { get; set; }
 
         [Phone]

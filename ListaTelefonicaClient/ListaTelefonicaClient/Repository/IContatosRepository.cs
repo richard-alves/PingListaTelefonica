@@ -16,7 +16,7 @@ namespace ListaTelefonicaClient.Repository
         Task<List<Contato>> GetContatosAsync(string filtro);
         Task<Contato> GetContatoAsync(int id);
         Task<HttpResponseMessage> Create(Contato contato);
-        Task Update(Contato contato);
-        Task Delete(int id);
+        Task<HttpResponseMessage> Update(Contato contato);
+        Task<HttpResponseMessage> Delete(int id);
     }
 }

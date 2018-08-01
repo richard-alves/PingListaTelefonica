@@ -21,12 +21,7 @@ namespace ListaTelefonicaClient.Controllers
         /// Repositório para gerenciamento de login
         /// </summary>
         private readonly IAccountRepository _rep;
-
-        /// <summary>
-        /// Token de autenticação
-        /// </summary>
-        Token _token = Startup._token;
-
+        
         /// <summary>
         /// Inicializa uma nova instância de <see cref="AccountController"/>
         /// </summary>
@@ -35,7 +30,6 @@ namespace ListaTelefonicaClient.Controllers
         public AccountController(IAccountRepository rep, Token token)
         {
             _rep = rep;
-            //_token = token;
         }
 
         /// <summary>
@@ -65,10 +59,7 @@ namespace ListaTelefonicaClient.Controllers
         {
             // Retorno do login
             var response = await _rep.Login(model.Email, model.Password, model.RememberMe);
-
-            // Token criada
-            Startup._token = response.token;
-
+            
             // Se não deu certo retorna BadRequest
             if (!response.httpResponse.IsSuccessStatusCode) return BadRequest(response.httpResponse);
 
@@ -87,13 +78,9 @@ namespace ListaTelefonicaClient.Controllers
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
-            {
                 return Redirect(returnUrl);
-            }
             else
-            {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
         }
     }
 }

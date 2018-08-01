@@ -16,25 +16,10 @@ namespace ListaTelefonicaClient.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        /*
-         * Por algum motivo que eu não consegui entender, a autenticação não é enviada ao httpClient.Headers.Authentication dos requests
-         * Por esse motivo, verifico se _token.Authenticated, se for false chamo a tela de login, se não executo a ação atual
-         */
-
-        /// <summary>
-        /// SERIA UTILIZADO PARA CONTROLE DE AUTENTICAÇÃO, PORÉM A INFORMAÇÃO DE HEADERS.AUTHENTICATION NÃO É TRANSMISTIDA NO HTTPCLIENT.REQUEST
-        /// </summary>
-        private readonly HttpClient _httpClient;
-
         /// <summary>
         /// Repositório para gerenciar contatos
         /// </summary>
         private readonly IContatosRepository _rep;
-
-        /// <summary>
-        /// Token de acesso (Usando devido não conseguir passar o DefaultHeader para o httpClient)
-        /// </summary>
-        private Token _token = Startup._token;
 
         /// <summary>
         /// Inicializa uma nova instância de<see cref="HomeController"/>
@@ -52,8 +37,6 @@ namespace ListaTelefonicaClient.Controllers
         // GET: ContatoViewModels/Create
         public IActionResult Create()
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
 
             return View();
         }
@@ -67,8 +50,6 @@ namespace ListaTelefonicaClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] Contato contato)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
 
             if (ModelState.IsValid)
             {
@@ -96,8 +77,6 @@ namespace ListaTelefonicaClient.Controllers
         // GET: Contatos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
             if (id == null || id < 0) return NotFound();
 
             var contato = await _rep.GetContatoAsync(id.GetValueOrDefault());
@@ -115,8 +94,6 @@ namespace ListaTelefonicaClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
             try
             {
                 await _rep.Delete(id);
@@ -141,8 +118,6 @@ namespace ListaTelefonicaClient.Controllers
         // GET: Contatos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
             if (id == null) return NotFound();
 
             try
@@ -169,8 +144,6 @@ namespace ListaTelefonicaClient.Controllers
         // GET: Contatos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
             if (id == null || id < 0) return NotFound();
 
             try
@@ -200,8 +173,6 @@ namespace ListaTelefonicaClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Telefone,Celular,Email,Nascimento")] Contato contato)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
             if (id != contato.Codigo) return NotFound();
 
             if (ModelState.IsValid)
@@ -250,8 +221,6 @@ namespace ListaTelefonicaClient.Controllers
         /// <returns>Página</returns>
         public async Task<IActionResult> Index(int id, string filtro, string sortOrder, string currentFilter)
         {
-            if (!_token.Authenticated)
-                return RedirectToRoute("Login");
 
             try
             {
