@@ -86,13 +86,21 @@
             Fazendo o logout
             </summary>
         </member>
+        <member name="T:ListaTelefonicaAPI.Controllers.RegisterController">
+            <summary>
+            Para registrar novo usuário
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.Controllers.RegisterController.#ctor(Microsoft.AspNetCore.Identity.UserManager{ListaTelefonicaAPI.Models.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{ListaTelefonicaAPI.Models.ApplicationUser})">
+            <summary>
+            Inicializa uma nova instância de <see cref="T:ListaTelefonicaAPI.Controllers.RegisterController"/>
+            </summary>
+        </member>
         <member name="M:ListaTelefonicaAPI.Controllers.RegisterController.Post(ListaTelefonicaAPI.Models.Autenticacao.User)">
             <summary>
             Registrando novo usuário
             </summary>
-            <param name="userName"></param>
-            <param name="password"></param>
-            <param name="confirmPassword"></param>
+            <param name="usuario">Informações do usuário sendo registrado</param>
             <returns></returns>
         </member>
         <member name="T:ListaTelefonicaAPI.Data.IdentityInitializer">

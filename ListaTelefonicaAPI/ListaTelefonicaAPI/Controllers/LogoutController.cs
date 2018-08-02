@@ -11,7 +11,6 @@ namespace ListaTelefonicaAPI.Controllers
     /// <summary>
     /// Responsável pelo logout
     /// </summary>
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class LogoutController : Controller

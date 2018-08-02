@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace ListaTelefonicaClient.Models
 {
+    /// <summary>
+    /// View para registro de novo usuário
+    /// </summary>
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Usuário")]
+        [Display(Name = "E-mail")]
+        [EmailAddress(ErrorMessage = "Informe um e-mail válido.")]
         public string Email { get; set; }
 
         [Required]
@@ -20,7 +24,7 @@ namespace ListaTelefonicaClient.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Repetir a Senha")]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "A senha não corresponde à informada anteriormente")]
         public string ConfirmPassword { get; set; }
     }
 }

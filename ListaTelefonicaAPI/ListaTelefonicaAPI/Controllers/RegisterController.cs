@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace ListaTelefonicaAPI.Controllers
 {
+    /// <summary>
+    /// Para registrar novo usuário
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class RegisterController:Controller
@@ -17,6 +20,9 @@ namespace ListaTelefonicaAPI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
+        /// <summary>
+        /// Inicializa uma nova instância de <see cref="RegisterController"/>
+        /// </summary>
         public RegisterController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
@@ -26,34 +32,33 @@ namespace ListaTelefonicaAPI.Controllers
         /// <summary>
         /// Registrando novo usuário
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="confirmPassword"></param>
+        /// <param name="usuario">Informações do usuário sendo registrado</param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(string), 200)]
-        public async Task<ApplicationUser> Post(
-            [FromBody]User usuario
-            //string userName, string password, string confirmPassword
-            )
+        public async Task<ApplicationUser> Post([FromBody]User usuario)
         {
-            var user = new ApplicationUser { UserName = usuario.UserID, Email = usuario.UserID };
-            var result = await _userManager.CreateAsync(user, usuario.Password);
-
-            if (result.Succeeded)
+            if (_userManager.FindByNameAsync(usuario.UserID).Result == null)
             {
-                if (!String.IsNullOrWhiteSpace(Roles.DEFAULT_ROLE)) _userManager.AddToRoleAsync(user, Roles.DEFAULT_ROLE).Wait();
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return user;
-            }
-            else
-            {
-                foreach (var err in result.Errors)
-                    throw new Exception("Erro ao tentar registrar usuário:" + string.Join(Environment.NewLine, result.Errors));
-            }
+                var user = new ApplicationUser { UserName = usuario.UserID, Email = usuario.UserID };
+                var result = await _userManager.CreateAsync(user, usuario.Password);
 
-            throw new Exception("Erro ao tentar registrar usuário.");
+                if (result.Succeeded)
+                {
+                    if (!String.IsNullOrWhiteSpace(Roles.DEFAULT_ROLE)) _userManager.AddToRoleAsync(user, Roles.DEFAULT_ROLE).Wait();
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return user;
+                }
+                else
+                {
+                    foreach (var err in result.Errors)
+                        throw new Exception("Erro ao tentar registrar usuário:" + string.Join(Environment.NewLine, result.Errors));
+                }
+            }
+            else ModelState.AddModelError(string.Empty, "O usuário já está cadastrado");
+
+            throw new Exception("Erro ao tentar registrar o novo usuário...");
         }
     }
 }

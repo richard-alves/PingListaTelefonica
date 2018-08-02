@@ -32,7 +32,7 @@ namespace ListaTelefonicaAPI
                 try
                 {
                     var context = services.GetRequiredService<ListaTelefonicaContext>();
-                    context.Database.EnsureCreated();
+                    //context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {

@@ -23,23 +23,21 @@ namespace ListaTelefonicaClient.Models
 
         [Required]
         [Phone]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:(351) ### ### ###}")]
-        [RegularExpression("#########")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         [DataType(DataType.PhoneNumber)]
         public string Telefone { get; set; }
 
         [Phone]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:(351) ### ### ###}")]
-        [RegularExpression("#########")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public string Celular { get; set; }
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Informe um e-mail válido.")]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date, ErrorMessage ="Informe uma data válida")]
         [Display(Name = "Data de Nascimento")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Nascimento { get; set; }
     }
 }

@@ -48,6 +48,7 @@ namespace ListaTelefonicaClient.Repository
                 return res;
             }
             catch (Exception ex)
+
             {
                 throw ex;
             }

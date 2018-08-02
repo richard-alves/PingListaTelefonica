@@ -141,7 +141,7 @@ namespace ListaTelefonicaAPI
                     new Info
                     {
                         Title = "Lista Telefônica",
-                        Version = "v1",
+                        Version = "v2.0",
                         Description = "Contatos de uma lista",
                         Contact = new Contact
                         {
@@ -212,7 +212,7 @@ namespace ListaTelefonicaAPI
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "swagger";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lista Telefonica");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lista Telefônica");
             });
 
             app.UseMvc();

@@ -79,7 +79,7 @@ namespace ListaTelefonicaClient.Controllers
                 Startup.Autenticado = false;
                 return RedirectToAction("Login");
             }
-            else return BadRequest(res.Content);
+            else return BadRequest();
         }
 
         public async Task<IActionResult> Register(string returnUrl)
@@ -96,16 +96,23 @@ namespace ListaTelefonicaClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Email,Password,ConfirmPassword")] RegisterViewModel model, string returnUrl)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
-            var res = await _rep.Register(model);
-
-            if (res.IsSuccessStatusCode)
+            if (ModelState.IsValid)
             {
-                await Login(new LoginViewModel { Email = model.Email, Password = model.Password }, returnUrl);
-            }
+                ViewData["ReturnUrl"] = returnUrl;
 
-            return View(model);
+                var res = await _rep.Register(model);
+
+                IActionResult ret = View(model);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    await Login(new LoginViewModel { Email = model.Email, Password = model.Password }, returnUrl)
+                        .ContinueWith(a => { if (Startup.Autenticado) ret = RedirectToLocal(returnUrl); });
+                }
+
+                return ret;
+            }
+            else return BadRequest(ModelState);
         }
         /// <summary>
         /// Página que estava acessando ou Home
@@ -114,7 +121,7 @@ namespace ListaTelefonicaClient.Controllers
         /// <returns>Home se returnUrl for null</returns>
         private IActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl(returnUrl) || returnUrl.StartsWith("https://localhost:44391"))
                 return Redirect(returnUrl);
             else
                 return RedirectToAction(nameof(HomeController.Index), "Home");

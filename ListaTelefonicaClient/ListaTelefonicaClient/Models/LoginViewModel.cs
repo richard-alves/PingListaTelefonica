@@ -12,8 +12,8 @@ namespace ListaTelefonicaClient.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Usuário")]
-        [EmailAddress]
+        [Display(Name = "E-mail")]
+        [EmailAddress(ErrorMessage = "Informe um e-mail válido.")]
         public string Email { get; set; }
 
         [Required]
@@ -22,7 +22,7 @@ namespace ListaTelefonicaClient.Models
         public string Password { get; set; }
 
         [Display(Name = "Manter conectado")]
-        public bool RememberMe { get; set; }
+        public bool RememberMe => false;
         
         public Token token { get; set; }
     }
