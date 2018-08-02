@@ -15,6 +15,7 @@ namespace ListaTelefonicaAPI.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
+    [ValidateModel]
     public class RegisterController:Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -37,28 +38,35 @@ namespace ListaTelefonicaAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(string), 200)]
-        public async Task<ApplicationUser> Post([FromBody]User usuario)
+        public async Task<IActionResult> Post([FromBody]User usuario)
         {
-            if (_userManager.FindByNameAsync(usuario.UserID).Result == null)
+            if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = usuario.UserID, Email = usuario.UserID };
-                var result = await _userManager.CreateAsync(user, usuario.Password);
+                if (_userManager.FindByNameAsync(usuario.UserID).Result == null)
+                {
+                    var user = new ApplicationUser { UserName = usuario.UserID, Email = usuario.UserID };
+                    var result = await _userManager.CreateAsync(user, usuario.Password);
 
-                if (result.Succeeded)
-                {
-                    if (!String.IsNullOrWhiteSpace(Roles.DEFAULT_ROLE)) _userManager.AddToRoleAsync(user, Roles.DEFAULT_ROLE).Wait();
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return user;
+                    if (result.Succeeded)
+                    {
+                        if (!String.IsNullOrWhiteSpace(Roles.DEFAULT_ROLE)) _userManager.AddToRoleAsync(user, Roles.DEFAULT_ROLE).Wait();
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //return user;
+                        return Ok(user);
+                    }
+                    else
+                    {
+                        foreach (var err in result.Errors)
+                            ModelState.AddModelError(err.Code, err.Description);
+
+                        return BadRequest(string.Join(Environment.NewLine, result.Errors));
+                        //throw new Exception("Erro ao tentar registrar usuário:" + string.Join(Environment.NewLine, result.Errors));
+                    }
                 }
-                else
-                {
-                    foreach (var err in result.Errors)
-                        throw new Exception("Erro ao tentar registrar usuário:" + string.Join(Environment.NewLine, result.Errors));
-                }
+                else ModelState.AddModelError(string.Empty, "O usuário já está cadastrado");
             }
-            else ModelState.AddModelError(string.Empty, "O usuário já está cadastrado");
 
-            throw new Exception("Erro ao tentar registrar o novo usuário...");
+            return BadRequest(ModelState);
         }
     }
 }

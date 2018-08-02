@@ -51,6 +51,6 @@ namespace ListaTelefonicaAPI.Models
         /// </summary>
         [DataType(DataType.Date)]
         [Display(Name = "Data de Nascimento")]
-        public DateTime Nascimento { get; set; }
+        public DateTime? Nascimento { get; set; }
     }
 }

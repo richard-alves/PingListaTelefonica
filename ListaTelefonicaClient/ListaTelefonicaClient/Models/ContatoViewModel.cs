@@ -38,6 +38,7 @@ namespace ListaTelefonicaClient.Models
         [DataType(DataType.Date, ErrorMessage ="Informe uma data válida")]
         [Display(Name = "Data de Nascimento")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Nascimento { get; set; }
+        [Required(AllowEmptyStrings =true)]
+        public DateTime? Nascimento { get; set; }
     }
 }

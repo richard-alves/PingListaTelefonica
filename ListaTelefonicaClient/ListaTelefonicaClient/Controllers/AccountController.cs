@@ -65,6 +65,10 @@ namespace ListaTelefonicaClient.Controllers
                 Startup.Autenticado = true;
                 return RedirectToLocal(returnUrl);
             }
+            else
+            {
+                ModelState.AddModelError("", "O usuário e/ou senha informado estão incorretos");
+            }
 
             // Qualquer coisa ficamos na tela de login
             return View(model);
@@ -109,6 +113,7 @@ namespace ListaTelefonicaClient.Controllers
                     await Login(new LoginViewModel { Email = model.Email, Password = model.Password }, returnUrl)
                         .ContinueWith(a => { if (Startup.Autenticado) ret = RedirectToLocal(returnUrl); });
                 }
+                else ModelState.AddModelError("Password", "Não foi possível registrar o usuário. A senha deve conter entre 8 e 12 caracteres e deve conter letras e números");
 
                 return ret;
             }
@@ -121,7 +126,7 @@ namespace ListaTelefonicaClient.Controllers
         /// <returns>Home se returnUrl for null</returns>
         private IActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl) || returnUrl.StartsWith("https://localhost:44391"))
+            if (Url.IsLocalUrl(returnUrl) || (returnUrl?.StartsWith("https://localhost:44391")).GetValueOrDefault())
                 return Redirect(returnUrl);
             else
                 return RedirectToAction(nameof(HomeController.Index), "Home");
