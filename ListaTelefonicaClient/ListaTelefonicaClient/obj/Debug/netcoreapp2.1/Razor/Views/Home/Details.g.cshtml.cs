@@ -164,7 +164,7 @@ using ListaTelefonicaClient.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(1051, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3b8a2416a0d243eaa6c6806e84fe1e71", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cbf1a1b9ca8d4dfda2daff29bb423e83", async() => {
                 BeginContext(1101, 6, true);
                 WriteLiteral("Editar");
                 EndContext();
@@ -199,7 +199,7 @@ using ListaTelefonicaClient.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(1119, 55, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "137ebb65fa4641fe8b5d9b194ea8f876", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "38accc0346004d3b8319c4055d513c38", async() => {
                 BeginContext(1141, 29, true);
                 WriteLiteral("Voltar para lista de contatos");
                 EndContext();
