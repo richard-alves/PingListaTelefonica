@@ -16,7 +16,7 @@ namespace ListaTelefonicaAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [ValidateModel]
-    public class RegisterController:Controller
+    public class RegisterController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -38,7 +38,7 @@ namespace ListaTelefonicaAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(string), 200)]
-        public async Task<IActionResult> Post([FromBody]User usuario)
+        public async Task<ActionResult<User>> Post([FromBody]User usuario)
         {
             if (ModelState.IsValid)
             {

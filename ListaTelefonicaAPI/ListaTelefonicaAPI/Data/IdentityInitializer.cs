@@ -57,7 +57,7 @@ namespace ListaTelefonicaAPI.Data
                 CreateUser(
                     new ApplicationUser()
                     {
-                        UserName = "admin",
+                        UserName = "admin@teste.com.br",
                         Email = "admin@teste.com.br",
                         EmailConfirmed = true
                     }, "admin123", Roles.DEFAULT_ROLE);

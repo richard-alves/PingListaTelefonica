@@ -155,6 +155,8 @@ namespace ListaTelefonicaClient.Controllers
                 var contato = await _rep.GetContatoAsync(id.GetValueOrDefault());
                 if (contato == null) return NotFound();
 
+                contato.Nascimento = contato.Nascimento.Date;
+
                 return View(contato);
             }
             catch (NotAuthorizedException)
