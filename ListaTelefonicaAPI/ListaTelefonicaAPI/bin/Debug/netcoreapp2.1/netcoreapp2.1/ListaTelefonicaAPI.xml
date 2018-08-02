@@ -406,5 +406,15 @@
             <param name="userManager">Gerenciamento de contas de usuário</param>
             <param name="roleManager">gerenciamento de acessos</param>
         </member>
+        <member name="T:ListaTelefonicaAPI.ValidateModelAttribute">
+            <summary>
+            Classe de validação
+            </summary>
+        </member>
+        <member name="M:ListaTelefonicaAPI.ValidateModelAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Ao executar ação, verifica se tem erros no modelo
+            </summary>
+        </member>
     </members>
 </doc>
