@@ -39,9 +39,6 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["ordemEmail"]" asp-route-currentFilter="@ViewData["filtro"]">@Html.DisplayNameFor(model => model.Email)</a>
             </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordemNasc"]" asp-route-currentFilter="@ViewData["filtro"]">@Html.DisplayNameFor(model => model.Nascimento)</a>
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -63,9 +60,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nascimento)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a> |
